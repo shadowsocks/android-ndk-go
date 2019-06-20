@@ -1,9 +1,9 @@
-FROM circleci/android:api-28-alpha
+FROM circleci/android:api-29
 
 # NDK see also: https://github.com/CircleCI-Public/circleci-dockerfiles/blob/cb8bda793023d3e919ea5553e2f2c04b71f53c49/android/images/api-28-ndk/Dockerfile#L181
 
-ARG ndk_version=android-ndk-r19
-ARG go_version=1.11
+ARG ndk_version=android-ndk-r20
+ARG go_version=1.12.6
 ARG android_ndk_home=/opt/android/${ndk_version}
 
 # install NDK
