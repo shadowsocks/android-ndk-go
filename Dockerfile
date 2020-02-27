@@ -2,19 +2,15 @@ FROM circleci/android:api-29
 
 # NDK see also: https://github.com/CircleCI-Public/circleci-dockerfiles/blob/cb8bda793023d3e919ea5553e2f2c04b71f53c49/android/images/api-28-ndk/Dockerfile#L181
 
-ARG ndk_version=android-ndk-r21
 ARG go_version=1.13.7
-ARG android_ndk_home=/opt/android/${ndk_version}
+ARG ndk_version=21.0.6113669
+ARG android_ndk_home=${android_home}/ndk/${ndk_version}
 
 # install NDK
-RUN curl --silent --show-error --location --fail --retry 3 --output /tmp/${ndk_version}.zip \
-        https://dl.google.com/android/repository/${ndk_version}-linux-x86_64.zip && \
-    sudo unzip -q /tmp/${ndk_version}.zip -d /opt/android && \
-    rm /tmp/${ndk_version}.zip && \
-    sudo chown -R circleci:circleci ${android_ndk_home}
-
+RUN sdkmanager --install "ndk;${ndk_version}"
 ENV ANDROID_NDK_HOME ${android_ndk_home}
 
+# install go
 RUN \
     curl --silent --show-error --location --fail --retry 3 --output /tmp/go${go_version}.tgz \
         "https://golang.org/dl/go${go_version}.linux-amd64.tar.gz" && \
