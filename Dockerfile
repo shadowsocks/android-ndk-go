@@ -1,8 +1,8 @@
-FROM circleci/android:api-29
+FROM circleci/android:api-30
 
 # NDK see also: https://github.com/CircleCI-Public/circleci-dockerfiles/blob/cb8bda793023d3e919ea5553e2f2c04b71f53c49/android/images/api-28-ndk/Dockerfile#L181
 
-ARG go_version=1.14.4
+ARG go_version=1.14.7
 ARG ndk_version=21.3.6528147
 ARG android_ndk_home=${android_home}/ndk/${ndk_version}
 
@@ -23,7 +23,7 @@ ENV PATH /usr/local/go/bin:$PATH
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH \
-    RUST_VERSION=1.44.0
+    RUST_VERSION=1.45.2
 
 RUN set -eux; \
     dpkgArch="$(dpkg --print-architecture)"; \
