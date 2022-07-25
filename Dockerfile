@@ -23,13 +23,14 @@ ENV PATH /usr/local/go/bin:$PATH
 
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
-    PATH=/usr/local/cargo/bin:$PATH
+    PATH=/usr/local/cargo/bin:$PATH \
+    RUST_VERSION=1.64.0
 
 RUN set -eux; \
     url="https://sh.rustup.rs"; \
     sudo wget "$url" -O rustup-init; \
     sudo chmod +x rustup-init; \
-    sudo RUSTUP_HOME=/usr/local/rustup CARGO_HOME=/usr/local/cargo ./rustup-init -y --no-modify-path --profile minimal; \
+    sudo RUSTUP_HOME=/usr/local/rustup CARGO_HOME=/usr/local/cargo ./rustup-init -y --no-modify-path --profile minimal --default-toolchain $RUST_VERSION; \
     sudo rm rustup-init; \
     sudo chmod -R a+w $RUSTUP_HOME $CARGO_HOME; \
     rustup --version; \
@@ -38,7 +39,7 @@ RUN set -eux; \
 
 # setup rust targets
 RUN \
-    rustup default nightly; \
+    rustup default nightly \
     rustup target add armv7-linux-androideabi; \
     rustup target add i686-linux-android; \
     rustup target add aarch64-linux-android; \
