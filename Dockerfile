@@ -1,9 +1,10 @@
-FROM circleci/android:api-30
+# https://circleci.com/developer/images/image/cimg/android
+FROM cimg/android:2022.06
 
 # NDK see also: https://github.com/CircleCI-Public/circleci-dockerfiles/blob/cb8bda793023d3e919ea5553e2f2c04b71f53c49/android/images/api-28-ndk/Dockerfile#L181
 
-ARG go_version=1.16.7
-ARG ndk_version=21.4.7075529
+ARG go_version=1.19
+ARG ndk_version=25.1.8937393
 ARG android_ndk_home=${android_home}/ndk/${ndk_version}
 
 # install NDK
@@ -23,7 +24,8 @@ ENV PATH /usr/local/go/bin:$PATH
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH \
-    RUST_VERSION=1.54.0
+    RUST_VERSION=1.65.0
+    RUST_TOOLCHAIN_VER=2022-08-28
 
 RUN set -eux; \
     dpkgArch="$(dpkg --print-architecture)"; \
@@ -47,7 +49,8 @@ RUN set -eux; \
 
 # setup rust targets
 RUN \
+    rustup default nightly-$RUST_TOOLCHAIN_VER; \
     rustup target add armv7-linux-androideabi; \
     rustup target add i686-linux-android; \
-	rustup target add aarch64-linux-android; \
-	rustup target add x86_64-linux-android
+    rustup target add aarch64-linux-android; \
+    rustup target add x86_64-linux-android
